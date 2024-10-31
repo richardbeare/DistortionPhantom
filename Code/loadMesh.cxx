@@ -18,7 +18,7 @@ typedef class CmdLineType
 {
 public:
   std::string InIm, OutputIm;
-  float buffer;
+  float buffer, voxsize;
 } CmdLineType;
 
 void ParseCmdLine(int argc, char* argv[],
@@ -39,12 +39,16 @@ void ParseCmdLine(int argc, char* argv[],
     ValueArg<float> bArg("b","buffer","padding around bounding box", false, 5,"float");
     cmd.add(bArg);
 
+    ValueArg<float> vArg("v","voxel","voxel size", false, 0.5, "float");
+    cmd.add(vArg);
+
     // Parse the args.
     cmd.parse( argc, argv );
 
     CmdLineObj.InIm = inArg.getValue();
     CmdLineObj.OutputIm = outArg.getValue();
     CmdLineObj.buffer = bArg.getValue();
+    CmdLineObj.voxsize = vArg.getValue();
     }
   catch (ArgException &e)  // catch any exc eptions
     {
@@ -105,7 +109,7 @@ int main(int argc, char * argv[])
   bbsize[2] =  BB->GetBounds()[5] - BB->GetBounds()[4] + 2 * buffer;
 
   OutputImageType::SpacingType sp;
-  sp.Fill(0.5);
+  sp.Fill(CmdLineObj.voxsize);
 
   OutputImageType::SizeType sz;
   sz[0] = round(bbsize[0]/sp[0]);
