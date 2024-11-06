@@ -35,3 +35,11 @@ spacing added to the mesh bounding box.
 There will be a couple more steps to perform to get contrasts set up, which I'll
 document once I've seen some real scans.
 
+## Problems
+The mesh rendering tool isn't perfect. Sometimes it leaves blank lines through the
+solid or fills isolate lines in the empty space - I've no idea why.
+
+These are minor, but annoying, because they may stop the fill process from
+working. I've included corrections in my plug mask - this is manual.
+
+Finding the problems is a pain - do a tophat and review.
